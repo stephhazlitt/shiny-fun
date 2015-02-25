@@ -1,12 +1,11 @@
-## ggplot2 line graph
+## load libraries
 
 library(ggplot2)
 library(ggvis)
 
 ## load open data (BCOGL)
-data <- read.csv("/Users/StephHazlitt/Documents/rcourse/data/Conservation_status_index_vertebrates_1992-2012.csv", 
-                 header=TRUE, sep=",", strip.white=TRUE,
-                    na.string=c("-",""))
+data <- read.csv("http://www.env.gov.bc.ca/soe/archive/data/plants-and-animals/2012_Vert_Species_Status/Conservation_status_index_vertebrates_1992-2012.csv")
+
 ## create plot theme
 chart_theme <- theme(
   axis.line = element_line(colour="black"),
@@ -40,5 +39,12 @@ data %>% ggvis(~Year, ~Index_Value) %>%
   layer_points(fill = ~Taxonomic_Group, key :=~id) %>% 
   add_tooltip(text, "hover") %>%
   group_by(Taxonomic_Group) %>%
-  layer_lines(stroke = ~Taxonomic_Group)
+  layer_lines(stroke = ~Taxonomic_Group) %>%
+  add_axis("x", title="Assessment Year",  format="####") %>%
+  add_axis("y", title="Conservation Status Index")
+
+
+#  input_checkboxgroup(choices = c("Breeding Birds" = , "Freshwater Fish", "Mammals", "Reptiles and Amphibians"),
+#                    label = "Taxonomic Group")
+  
 
